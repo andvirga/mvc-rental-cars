@@ -16,15 +16,12 @@ namespace mvc_rental_cars.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-            //comment eze
             return View();
         }
 
         public ActionResult Contact()
         {
-            //--Este comentario va a traer conflictos
-            ViewBag.Message = "Your contact page.";
-            //new comment
+           ViewBag.Message = "Your contact page.";
             return View();
         }
     }
