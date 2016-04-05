@@ -15,13 +15,13 @@ namespace mvc_rental_cars.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "MVC Rental Cars App";
             return View();
         }
 
         public ActionResult Contact()
         {
-           ViewBag.Message = "Your contact page.";
+           ViewBag.Message = "Información de Contacto";
             return View();
         }
     }
