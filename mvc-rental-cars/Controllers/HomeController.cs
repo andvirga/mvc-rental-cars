@@ -23,7 +23,7 @@ namespace mvc_rental_cars.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
+            //new comment
             return View();
         }
     }
