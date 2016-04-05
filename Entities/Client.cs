@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entities
 {
@@ -18,21 +19,25 @@ namespace Entities
         /// <summary>
         /// Primer Nombre
         /// </summary>
+        [Display(Name = "Nombre")]
         public String FirstName { get; set; }
 
         /// <summary>
         /// Apellido
         /// </summary>
+        [Display(Name = "Apellido")]
         public String LastName { get; set; }
 
         /// <summary>
         /// E-Mail
         /// </summary>
+        [Display(Name = "Email")]
         public String Email { get; set; }
 
         /// <summary>
         /// Alquileres del Cliente
         /// </summary>
+        [Display(Name = "Alquileres")]
         public virtual List<Reservation> Reservations { get; set; }
 
         #endregion
