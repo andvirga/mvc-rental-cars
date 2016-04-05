@@ -22,6 +22,7 @@ namespace mvc_rental_cars.Controllers
 
         public ActionResult Contact()
         {
+            //--Este comentario va a traer conflictos
             ViewBag.Message = "Your contact page.";
 
             return View();
