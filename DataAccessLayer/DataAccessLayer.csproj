@@ -53,6 +53,10 @@
     <Compile Include="Migrations\201604062038410_FirstMigrationEF.Designer.cs">
       <DependentUpon>201604062038410_FirstMigrationEF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604062043326_SecondMigrationRequiredFields.cs" />
+    <Compile Include="Migrations\201604062043326_SecondMigrationRequiredFields.Designer.cs">
+      <DependentUpon>201604062043326_SecondMigrationRequiredFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RentalCarsDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +74,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604062038410_FirstMigrationEF.resx">
       <DependentUpon>201604062038410_FirstMigrationEF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604062043326_SecondMigrationRequiredFields.resx">
+      <DependentUpon>201604062043326_SecondMigrationRequiredFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,12 +21,14 @@ namespace Entities
         /// </summary>
         
         [Display(Name = "Nombre")]
+        [Required]
         public String FirstName { get; set; }
 
         /// <summary>
         /// Apellido
         /// </summary>
         [Display(Name = "Apellido")]
+        [Required]
         public String LastName { get; set; }
 
         /// <summary>
