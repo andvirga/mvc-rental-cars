@@ -49,6 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201604062038410_FirstMigrationEF.cs" />
+    <Compile Include="Migrations\201604062038410_FirstMigrationEF.Designer.cs">
+      <DependentUpon>201604062038410_FirstMigrationEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RentalCarsDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,6 +66,11 @@
       <Project>{635006cc-c3a2-41ce-b7da-fc4e850b0656}</Project>
       <Name>Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604062038410_FirstMigrationEF.resx">
+      <DependentUpon>201604062038410_FirstMigrationEF.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
