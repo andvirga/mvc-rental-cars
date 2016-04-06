@@ -38,11 +38,34 @@ namespace mvc_rental_cars.Controllers
             return View(client);
         }
 
+        // GET: Clients/Details/5
+        public ActionResult DetailsPopUp(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Client client = db.ClientContext.Find(id);
+            if (client == null)
+            {
+                return HttpNotFound();
+            }
+            return View(client);
+        }
+
+
         // GET: Clients/Create
         public ActionResult Create()
         {
             return View();
         }
+
+        // GET: Clients/Create
+        public ActionResult CreatePopUp()
+        {
+            return PartialView("_CreatePopUpPartial");
+        }
+
 
         // POST: Clients/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

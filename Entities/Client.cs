@@ -19,6 +19,7 @@ namespace Entities
         /// <summary>
         /// Primer Nombre
         /// </summary>
+        
         [Display(Name = "Nombre")]
         public String FirstName { get; set; }
 

@@ -312,6 +312,8 @@
     <Content Include="Views\Clients\Edit.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Clients\_CreatePartial.cshtml" />
+    <Content Include="Views\Clients\_DetailsPartial.cshtml" />
+    <Content Include="Views\Clients\_CreatePopUpPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
