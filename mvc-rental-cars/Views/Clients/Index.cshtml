@@ -40,7 +40,7 @@
  
 
 </p>
-@*<button id="modal-opener">Create New</button>*@
+
 <table class="table">
     <tr>
         <th>
@@ -84,6 +84,7 @@
 <!---
  Se crea un div de la clase "dialog-modal" que contiene una llamada a AJAX y que va a ser el formulario que se abra dentro del modal contenido en el layout
  -->
+<button id="modal-opener">Launch Modal</button>
 <div id="dialog-modal" title="Basic Modal Dialog">
     @using (Ajax.BeginForm("index", new AjaxOptions { UpdateTargetId = "ID", OnSuccess = "onSuccess" }))
     {

@@ -7,12 +7,12 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
 
     <!--
         Se añade el siguiente script para hacer que se abra un formulario modal cada vez que se cliquea un objeto con la clase "dialog-modal"
         -->
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
-    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <script>
         $(function () {
             $("#dialog-modal").dialog({
