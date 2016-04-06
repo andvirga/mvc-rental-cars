@@ -6,6 +6,42 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+
+    <!--
+        Se añade el siguiente script para hacer que se abra un formulario modal cada vez que se cliquea un objeto con la clase "dialog-modal"
+        -->
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script>
+        $(function () {
+            $("#dialog-modal").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: [
+               {
+                   text: "Ok",
+                   icons: {
+                       primary: "ui-icon-heart"
+                   },
+                   click: function () {
+                       $(this).dialog("close");
+                   }
+
+                   // Uncommenting the following line would hide the text,
+                   // resulting in the label being used as a tooltip
+                   //showText: false
+               }
+                ]
+            });
+            $("#modal-opener").click(function () {
+                $("#dialog-modal").dialog("open");
+            });
+        });
+        function onSuccess() {
+            $("#dialog-modal").dialog("close");
+        }
+    </script>
 
 </head>
 <body>
@@ -38,7 +74,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
