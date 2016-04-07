@@ -40,9 +40,15 @@
                 {
                     @Html.AntiForgeryToken()
 
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger" /> |
-                        @Html.ActionLink("Cancelar", "Index")
+                    <div class="modal-footer">
+                        <div class="col-md-2">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </div>
+                        <div class="col-md-2">
+                            <a href="@Url.Action("Index", "Clients")">
+                                <span class="btn btn-primary">Cancel</span>
+                            </a>
+                        </div>
                     </div>
                 }
             </div>

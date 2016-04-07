@@ -35,6 +35,7 @@ namespace Entities
         /// E-Mail
         /// </summary>
         [Display(Name = "Email")]
+        [Required]
         public String Email { get; set; }
 
         /// <summary>

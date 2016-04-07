@@ -58,7 +58,7 @@ namespace mvc_rental_cars.Controllers
                 return RedirectToAction("Index");
             }
 
-            return PartialView("_CreatePartial", client);
+            return View("_CreatePartial");
         }
 
         // GET: Clients/Edit/5
@@ -89,7 +89,7 @@ namespace mvc_rental_cars.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return PartialView("_EditPartial", client);
+            return View("_EditPartial", client);
         }
 
         // GET: Clients/Delete/5
