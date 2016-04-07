@@ -37,13 +37,6 @@ namespace mvc_rental_cars.Controllers
         }
 
         // GET: Cars/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-
-        // GET: Cars/Create
         public ActionResult CreatePartial()
         {
             return PartialView("_CreatePartial");
@@ -68,29 +61,11 @@ namespace mvc_rental_cars.Controllers
                 }
 
             }
-            
+
             //Something bad happened
             return PartialView("_CreatePartial", car);
 
-           
-        }
 
-
-        // POST: Cars/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CarID,Doamin,Brand,Model,DailyTariff,AutomaticDrive")] Car car)
-        {
-            if (ModelState.IsValid)
-            {
-                db.CarContext.Add(car);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(car);
         }
 
         // GET: Cars/Edit/5
@@ -105,9 +80,32 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return View(car);
+            return PartialView("_EditPartial", car);
         }
+        [HttpPost]
+        public ActionResult EditPartial(Car car)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Entry(car).State = EntityState.Modified;
+                    db.SaveChanges();
 
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                }
+
+            }
+
+            //Something bad happened
+            return PartialView("_EditPartial", car);
+
+
+        }
         // POST: Cars/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

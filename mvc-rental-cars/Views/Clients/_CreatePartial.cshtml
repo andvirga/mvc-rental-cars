@@ -8,7 +8,7 @@
             <h4 class="modal-title">-- Nuevo Cliente --</h4>
         </div>
         <div class="modal-body">
-            @using (Html.BeginForm("Create", "Clients", FormMethod.Post))
+            @using (Html.BeginForm("CreatePartial", "Clients", FormMethod.Post, new { @class = "modal-form" }))
             {
                 @Html.AntiForgeryToken()
 
