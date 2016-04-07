@@ -42,6 +42,40 @@ namespace mvc_rental_cars.Controllers
             return View();
         }
 
+
+        // GET: Cars/Create
+        public ActionResult CreatePartial()
+        {
+            return PartialView("_CreatePartial");
+        }
+
+
+        [HttpPost]
+        public ActionResult CreatePartial(Car car)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.CarContext.Add(car);
+                    db.SaveChanges();
+                    //return RedirectToAction("Index");
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                }
+
+            }
+            
+            //Something bad happened
+            return PartialView("_CreatePartial", car);
+
+           
+        }
+
+
         // POST: Cars/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

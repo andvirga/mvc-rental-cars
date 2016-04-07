@@ -19,6 +19,7 @@ namespace Entities
         /// </summary>
         [Required]
         [Display(Name = "Patente")]
+        [RegularExpression(@"^[a-z]{3}[0-9]{3}$", ErrorMessage = "Patente invalida")]
         public String Doamin { get; set; }
 
         /// <summary>

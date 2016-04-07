@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nuevo", "Create", null, null, new { id = "btnCreate", @class = "btn btn-small btn-info" })
 </p>
 <table class="table">
     <tr>
@@ -55,3 +55,55 @@
 }
 
 </table>
+
+
+@*<div id='dialogDiv' class='modal hide fade in'>
+    <div id='dialogContent'></div>
+</div>*@
+
+
+<div id="dialogDiv" class="modal fade" tabindex="-1" role="dialog">
+    <div id='dialogContent'></div>
+</div><!-- /.modal -->
+
+
+<script type="text/javascript">
+    $(function () {
+
+        //Optional: turn the chache off
+        $.ajaxSetup({ cache: false });
+
+        $('#btnCreate').click(function () {
+            $('#dialogContent').load('@Url.Action("CreatePartial", "Cars")', function () {
+                $('#dialogDiv').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
+            });
+            return false;
+        });
+    });
+
+    function bindForm(dialog) {
+        $('form', dialog).submit(function () {
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        $('#dialogDiv').modal('hide');
+                        // Refresh:
+                        // location.reload();
+                    } else {
+                        $('#dialogContent').html(result);
+                        bindForm();
+                    }
+                }
+            });
+            return false;
+        });
+    }
+
+</script>
