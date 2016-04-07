@@ -50,7 +50,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.CarID }, new { id = "btnEdit", @class = "btn btn-small btn-info" })| 
             @Html.ActionLink("Details", "Details", new { id=item.CarID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CarID })
+            @Html.ActionLink("Delete", "DeletePartial", new { id = item.CarID }, new { id = "btnDelete", @class = "btn btn-small btn-info" })
         </td>
     </tr>
 }
@@ -96,6 +96,17 @@
             return false;
         });
 
+
+        $('#btnDelete').click(function () {
+            $('#dialogContent').load(this.href, function () {
+                $('#dialogDiv').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
+            });
+            return false;
+        });
 
 
     });

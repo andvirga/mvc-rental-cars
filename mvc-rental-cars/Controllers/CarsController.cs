@@ -122,6 +122,24 @@ namespace mvc_rental_cars.Controllers
             return View(car);
         }
 
+
+        // GET: Cars/DeletePartial/5
+        public ActionResult DeletePartial(long? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Car car = db.CarContext.Find(id);
+            if (car == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_DeletePartial", car);
+        }
+
+
         // GET: Cars/Delete/5
         public ActionResult Delete(long? id)
         {
@@ -138,14 +156,23 @@ namespace mvc_rental_cars.Controllers
         }
 
         // POST: Cars/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeletePartial")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Car car = db.CarContext.Find(id);
-            db.CarContext.Remove(car);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Car car = db.CarContext.Find(id);
+                db.CarContext.Remove(car);
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+            return PartialView("_DeletePartial");
         }
 
         protected override void Dispose(bool disposing)
