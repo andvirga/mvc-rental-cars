@@ -4,9 +4,10 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">-- Detalle del Cliente --</h4>
+            <h4 class="modal-title">-- Eliminar Cliente --</h4>
         </div>
         <div class="modal-body">
+            <h3>¿Esta seguro que desea eliminar el Cliente?</h3>
             <div>
                 <dl class="dl-horizontal">
                     <dt>
@@ -34,12 +35,23 @@
                     </dd>
 
                 </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-footer">
+                        <div class="col-md-2">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </div>
+                        <div class="col-md-2">
+                            <a href="@Url.Action("Index", "Clients")">
+                                <span class="btn btn-primary">Cancel</span>
+                            </a>
+                        </div>
+                    </div>
+                }
             </div>
-            <p>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                </div>
-            </p>
         </div>
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->

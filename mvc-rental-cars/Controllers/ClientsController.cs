@@ -35,37 +35,14 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return PartialView("_DetailsPartial", client);
         }
-
-        // GET: Clients/Details/5
-        public ActionResult DetailsPopUp(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.ClientContext.Find(id);
-            if (client == null)
-            {
-                return HttpNotFound();
-            }
-            return View(client);
-        }
-
 
         // GET: Clients/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView("_CreatePartial");
         }
-
-        // GET: Clients/Create
-        public ActionResult CreatePopUp()
-        {
-            return PartialView("_CreatePopUpPartial");
-        }
-
 
         // POST: Clients/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -81,7 +58,7 @@ namespace mvc_rental_cars.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(client);
+            return View("_CreatePartial");
         }
 
         // GET: Clients/Edit/5
@@ -96,7 +73,7 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return PartialView("_EditPartial", client);
         }
 
         // POST: Clients/Edit/5
@@ -112,7 +89,7 @@ namespace mvc_rental_cars.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(client);
+            return View("_EditPartial", client);
         }
 
         // GET: Clients/Delete/5
@@ -127,7 +104,7 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return PartialView("_DeletePartial", client);
         }
 
         // POST: Clients/Delete/5

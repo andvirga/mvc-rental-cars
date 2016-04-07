@@ -61,6 +61,10 @@
     <Compile Include="Migrations\201604071517130_car model modify.Designer.cs">
       <DependentUpon>201604071517130_car model modify.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604071813155_EmailRequired.cs" />
+    <Compile Include="Migrations\201604071813155_EmailRequired.Designer.cs">
+      <DependentUpon>201604071813155_EmailRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RentalCarsDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604071517130_car model modify.resx">
       <DependentUpon>201604071517130_car model modify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604071813155_EmailRequired.resx">
+      <DependentUpon>201604071813155_EmailRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
