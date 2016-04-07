@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Entities.Car>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Doamin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DailyTariff)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AutomaticDrive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Doamin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Brand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DailyTariff)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AutomaticDrive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CarID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CarID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CarID })
+        </td>
+    </tr>
+}
+
+</table>
