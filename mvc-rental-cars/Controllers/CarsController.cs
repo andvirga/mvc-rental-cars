@@ -33,9 +33,9 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return View(car);
+            return PartialView("_DetailsPartial",car);
         }
-
+   
         // GET: Cars/Create
         public ActionResult CreatePartial()
         {

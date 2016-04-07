@@ -339,6 +339,7 @@
     <Content Include="Views\Clients\_EditPartial.cshtml" />
     <Content Include="Views\Cars\_CreatePartial.cshtml" />
     <Content Include="Views\Cars\_EditPartial.cshtml" />
+    <Content Include="Views\Cars\_DetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
