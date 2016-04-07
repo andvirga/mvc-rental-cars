@@ -337,6 +337,7 @@
     <Content Include="Views\Cars\Index.cshtml" />
     <Content Include="Views\Clients\_DeletePartial.cshtml" />
     <Content Include="Views\Clients\_EditPartial.cshtml" />
+    <Content Include="Views\Cars\_CreatePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
