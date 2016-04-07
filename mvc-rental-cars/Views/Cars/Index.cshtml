@@ -8,6 +8,7 @@
 
 <p>
     @Html.ActionLink("Nuevo", "Create", null, null, new { id = "btnCreate", @class = "btn btn-small btn-info" })
+   
 </p>
 <table class="table">
     <tr>
@@ -47,7 +48,7 @@
             @Html.DisplayFor(modelItem => item.AutomaticDrive)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CarID }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.CarID }, new { id = "btnEdit", @class = "btn btn-small btn-info" })| 
             @Html.ActionLink("Details", "Details", new { id=item.CarID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.CarID })
         </td>
@@ -83,6 +84,20 @@
             });
             return false;
         });
+
+        $('#btnEdit').click(function () {
+            $('#dialogContent').load(this.href, function () {
+                $('#dialogDiv').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
+            });
+            return false;
+        });
+
+
+
     });
 
     function bindForm(dialog) {
@@ -95,7 +110,7 @@
                     if (result.success) {
                         $('#dialogDiv').modal('hide');
                         // Refresh:
-                        // location.reload();
+                        location.reload();
                     } else {
                         $('#dialogContent').html(result);
                         bindForm();

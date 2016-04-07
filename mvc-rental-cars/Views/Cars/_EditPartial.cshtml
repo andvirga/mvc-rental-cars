@@ -9,9 +9,11 @@
         </div>
         <div class="modal-body">
 
+
             @using (Html.BeginForm("EditPartial", "Cars", FormMethod.Post, new { @class = "modal-form" }))
             {
                 @Html.AntiForgeryToken()
+
 
                 <div class="form-horizontal">
                     <h4>Car</h4>
@@ -66,9 +68,15 @@
                             <input type="submit" value="Save" class="btn btn-default" />
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Undo</button>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
                 </div>
+
             }
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
+     </div>
+
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
