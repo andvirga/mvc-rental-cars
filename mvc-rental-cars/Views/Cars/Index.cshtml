@@ -85,7 +85,18 @@
             return false;
         });
 
-        $('#btnEdit').click(function () {
+        $('.btnEdit').click(function () {
+            $('#dialogContent').load(this.href, function () {
+                $('#dialogDiv').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
+            });
+            return false;
+        });
+
+        $('.btnDetails').click(function () {
             $('#dialogContent').load(this.href, function () {
                 $('#dialogDiv').modal({
                     backdrop: 'static',
