@@ -5,70 +5,60 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">-- Nuevo Cliente --</h4>
+            <h4 class="modal-title">Details</h4>
         </div>
         <div class="modal-body">
+            <div>
+             <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Doamin)
+                    </dt>
 
+                    <dd>
+                        @Html.DisplayFor(model => model.Doamin)
+                    </dd>
 
-            @using (Html.BeginForm("EditPartial", "Cars", FormMethod.Post, new { @class = "modal-form" }))
-            {
-                @Html.AntiForgeryToken()
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Brand)
+                    </dt>
 
-                <div>
-                    <h4>Car</h4>
-                    <hr />
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Doamin)
-                        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Brand)
+                    </dd>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Doamin)
-                        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Model)
+                    </dt>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Brand)
-                        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Model)
+                    </dd>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Brand)
-                        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DailyTariff)
+                    </dt>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Model)
-                        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DailyTariff)
+                    </dd>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Model)
-                        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AutomaticDrive)
+                    </dt>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.DailyTariff)
-                        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AutomaticDrive)
+                    </dd>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.DailyTariff)
-                        </dd>
+                </dl>
+            </div>
+            <p>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.AutomaticDrive)
-                        </dt>
+            </p>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.AutomaticDrive)
-                        </dd>
-
-                    </dl>
-                </div>
-                <p>
-                  
-                </p>
-
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                </div>
-            }
-
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
         </div>
 
     </div><!-- /.modal-content -->
