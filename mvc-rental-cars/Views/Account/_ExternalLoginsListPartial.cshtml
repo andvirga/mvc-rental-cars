@@ -22,9 +22,9 @@
                         <button type="submit" class="btn btn-social-icon btn-google" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
                     }*@
                     @foreach (AuthenticationDescription p in loginProviders) {
-                    <a class="btn btn-block btn-social btn-@p.AuthenticationType.ToLower()" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType">
+                    <button type="submit" class="btn btn-block btn-social btn-@p.AuthenticationType.ToLower()" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType">
                         <span class="fa fa-@p.AuthenticationType.ToLower()"></span> Log in using your @p.Caption account
-                    </a>
+                    </button>
                     }
                 </p>
             </div>

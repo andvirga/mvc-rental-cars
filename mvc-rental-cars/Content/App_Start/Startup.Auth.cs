@@ -58,11 +58,15 @@ namespace mvc_rental_cars
             //   appId: "",
             //   appSecret: "");
 
+            //--Google Auth Keys
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "744033175013-6hdafhnrt6c1kduff7p9o3sa76sr2g8o.apps.googleusercontent.com",
+              ClientId = "744033175013-6hdafhnrt6c1kduff7p9o3sa76sr2g8o.apps.googleusercontent.com",
               ClientSecret = "8XQ5E6HJV7q6nnUhsmY-b_Af"
             });
+
+            //--Facebook Auth Keys
+            app.UseFacebookAuthentication(appId: "1587630644897058", appSecret: "4404af0f625c28aaf11452407a5f1d6b");
         }
     }
 }
