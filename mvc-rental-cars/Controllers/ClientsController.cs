@@ -35,30 +35,35 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView("_DetailsPartial", client);
+            return PartialView("Details", client);
         }
 
         // GET: Clients/Create
         public ActionResult Create()
         {
-            return PartialView("_CreatePartial");
+            return PartialView("Create");
         }
 
-        // POST: Clients/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClientID,FirstName,LastName,Email")] Client client)
+        public ActionResult Create(Client client)
         {
             if (ModelState.IsValid)
             {
-                db.ClientContext.Add(client);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                try
+                {
+                    db.ClientContext.Add(client);
+                    db.SaveChanges();
+                    //return RedirectToAction("Index");
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                }
 
-            return View("_CreatePartial");
+            }
+            //Something bad happened
+            return PartialView("Create", client);
         }
 
         // GET: Clients/Edit/5
@@ -73,23 +78,30 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView("_EditPartial", client);
+            return PartialView("Edit", client);
         }
 
-        // POST: Clients/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClientID,FirstName,LastName,Email")] Client client)
+        public ActionResult Edit(Client client)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Entry(client).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                }
+
             }
-            return View("_EditPartial", client);
+
+            //Something bad happened
+            return PartialView("Edit", client);
         }
 
         // GET: Clients/Delete/5
@@ -104,7 +116,7 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView("_DeletePartial", client);
+            return PartialView("Delete", client);
         }
 
         // POST: Clients/Delete/5
@@ -112,10 +124,19 @@ namespace mvc_rental_cars.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Client client = db.ClientContext.Find(id);
-            db.ClientContext.Remove(client);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Client client = db.ClientContext.Find(id);
+                db.ClientContext.Remove(client);
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+            return PartialView("Delete");
         }
 
         protected override void Dispose(bool disposing)

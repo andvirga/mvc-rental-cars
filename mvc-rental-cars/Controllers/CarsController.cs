@@ -33,18 +33,18 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView("_DetailsPartial",car);
+            return PartialView("Details",car);
         }
    
         // GET: Cars/Create
-        public ActionResult CreatePartial()
+        public ActionResult Create()
         {
-            return PartialView("_CreatePartial");
+            return PartialView("Create");
         }
 
 
         [HttpPost]
-        public ActionResult CreatePartial(Car car)
+        public ActionResult Create(Car car)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +63,7 @@ namespace mvc_rental_cars.Controllers
             }
 
             //Something bad happened
-            return PartialView("_CreatePartial", car);
+            return PartialView("Create", car);
 
 
         }
@@ -80,10 +80,11 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView("_EditPartial", car);
+            return PartialView("Edit", car);
         }
+
         [HttpPost]
-        public ActionResult EditPartial(Car car)
+        public ActionResult Edit(Car car)
         {
             if (ModelState.IsValid)
             {
@@ -102,47 +103,13 @@ namespace mvc_rental_cars.Controllers
             }
 
             //Something bad happened
-            return PartialView("_EditPartial", car);
-
-
+            return PartialView("Edit", car);
         }
-        // POST: Cars/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CarID,Doamin,Brand,Model,DailyTariff,AutomaticDrive")] Car car)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(car).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(car);
-        }
-
-
-        // GET: Cars/DeletePartial/5
-        public ActionResult DeletePartial(long? id)
-        {
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Car car = db.CarContext.Find(id);
-            if (car == null)
-            {
-                return HttpNotFound();
-            }
-            return PartialView("_DeletePartial", car);
-        }
-
 
         // GET: Cars/Delete/5
         public ActionResult Delete(long? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -152,11 +119,11 @@ namespace mvc_rental_cars.Controllers
             {
                 return HttpNotFound();
             }
-            return View(car);
+            return PartialView("Delete", car);
         }
 
         // POST: Cars/Delete/5
-        [HttpPost, ActionName("DeletePartial")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
@@ -172,7 +139,7 @@ namespace mvc_rental_cars.Controllers
             {
                 ModelState.AddModelError("", e.Message);
             }
-            return PartialView("_DeletePartial");
+            return PartialView("Delete");
         }
 
         protected override void Dispose(bool disposing)

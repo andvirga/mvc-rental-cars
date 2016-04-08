@@ -1,58 +1,65 @@
 ﻿@model Entities.Car
 
-@{
-    ViewBag.Title = "Details";
-}
 
-<h2>Details</h2>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Detalles de Vehiculo</h4>
+        </div>
+        <div class="modal-body">
+            <div>
+             <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Doamin)
+                    </dt>
 
-<div>
-    <h4>Car</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Doamin)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Doamin)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Doamin)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Brand)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Brand)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Brand)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Model)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Model)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Model)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DailyTariff)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DailyTariff)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DailyTariff)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DailyTariff)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AutomaticDrive)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AutomaticDrive)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AutomaticDrive)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.AutomaticDrive)
-        </dd>
+                </dl>
+            </div>
+            <p>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CarID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            </p>
+
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

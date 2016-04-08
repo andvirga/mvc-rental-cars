@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<Entities.Car>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ABM - Automoviles";
 }
 
-<h2>Index</h2>
+<h2>ABM - Automoviles</h2>
+<br />
 
-<p>
-    @Html.ActionLink("Nuevo", "Create", null, null, new { id = "btnCreate", @class = "btn btn-small btn-info" })
-   
-</p>
 <table class="table">
     <tr>
         <th>
@@ -30,117 +27,41 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doamin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DailyTariff)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AutomaticDrive)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.CarID }, new { @class = "modal-link btn btn-primary glyphicon glyphicon-pencil btnEdit" })
+                @Html.ActionLink(" ", "Details", new { id = item.CarID }, new { @class = "modal-link btn btn-success glyphicon glyphicon-list-alt btnDetails" })
+                @Html.ActionLink(" ", "Delete", new { id = item.CarID }, new { @class = "modal-link btn btn-danger glyphicon glyphicon-remove btnDelete" })
+            </td>
+        </tr>
+    }
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Doamin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Brand)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Model)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DailyTariff)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AutomaticDrive)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.CarID }, new { @class = "btn btn-small btn-info btnEdit" })
-            @Html.ActionLink("Details", "Details", new { id = item.CarID }, new {@class = "btn btn-small btn-info btnDetails" })
-            @Html.ActionLink("Delete", "DeletePartial", new { id = item.CarID }, new { @class = "btn btn-small btn-info btnDelete" })
+            <p>
+                @Html.ActionLink("Alta Nuevo Vehiculo", "Create", null, null, new { @class = "btn btn-small btn-info btnCreate" })
+            </p>
         </td>
     </tr>
-}
-
 </table>
-
-
-@*<div id='dialogDiv' class='modal hide fade in'>
-    <div id='dialogContent'></div>
-</div>*@
 
 
 <div id="dialogDiv" class="modal fade" tabindex="-1" role="dialog">
     <div id='dialogContent'></div>
 </div><!-- /.modal -->
-
-
-<script type="text/javascript">
-    $(function () {
-
-        //Optional: turn the chache off
-        $.ajaxSetup({ cache: false });
-
-        $('#btnCreate').click(function () {
-            $('#dialogContent').load('@Url.Action("CreatePartial", "Cars")', function () {
-                $('#dialogDiv').modal({
-                    backdrop: 'static',
-                    keyboard: true
-                }, 'show');
-                bindForm(this);
-            });
-            return false;
-        });
-
-        $('.btnEdit').click(function () {
-            $('#dialogContent').load(this.href, function () {
-                $('#dialogDiv').modal({
-                    backdrop: 'static',
-                    keyboard: true
-                }, 'show');
-                bindForm(this);
-            });
-            return false;
-        });
-
-        $('.btnDetails').click(function () {
-            $('#dialogContent').load(this.href, function () {
-                $('#dialogDiv').modal({
-                    backdrop: 'static',
-                    keyboard: true
-                }, 'show');
-                bindForm(this);
-            });
-            return false;
-        });
-
-
-        $('.btnDelete').click(function () {
-            $('#dialogContent').load(this.href, function () {
-                $('#dialogDiv').modal({
-                    backdrop: 'static',
-                    keyboard: true
-                }, 'show');
-                bindForm(this);
-            });
-            return false;
-        });
-
-
-    });
-
-    function bindForm(dialog) {
-        $('form', dialog).submit(function () {
-            $.ajax({
-                url: this.action,
-                type: this.method,
-                data: $(this).serialize(),
-                success: function (result) {
-                    if (result.success) {
-                        $('#dialogDiv').modal('hide');
-                        // Refresh:
-                        location.reload();
-                    } else {
-                        $('#dialogContent').html(result);
-                        bindForm();
-                    }
-                }
-            });
-            return false;
-        });
-    }
-
-</script>
