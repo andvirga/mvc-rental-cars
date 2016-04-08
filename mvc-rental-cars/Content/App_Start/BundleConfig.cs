@@ -28,6 +28,8 @@ namespace mvc_rental_cars
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-social.css",
+                      "~/css/font-awesome.min.css",
                       "~/Content/site.css"));
         }
     }
