@@ -1,46 +1,11 @@
 ﻿@model IEnumerable<Entities.Client>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ABM - Clientes";
 }
 
-
-<script type="text/javascript">
-        $(function () {
-            // Initialize numeric spinner input boxes
-            //$(".numeric-spinner").spinedit();
-            // Initialize modal dialog
-            // attach modal-container bootstrap attributes to links with .modal-link class.
-            // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
-            $('body').on('click', '.modal-link', function (e) {
-                e.preventDefault();
-                $(this).attr('data-target', '#modal-container');
-                $(this).attr('data-toggle', 'modal');
-            });
-            // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
-            $('body').on('click', '.modal-close-btn', function () {
-                $('#modal-container').modal('hide');
-            });
-            //clear modal cache, so that new content can be loaded
-            $('#modal-container').on('hidden.bs.modal', function () {
-                $(this).removeData('bs.modal');
-            });
-        });
-</script>
-
-
-<h2>Clientes</h2>
-
-<p>
-    @*@Html.ActionLink("Create New", "Create",null, new { id = "modal-opener" })*@
-
-    @Html.ActionLink("Nuevo ", "CreatePopUp", "Clients",
-                null, new { @class = "modal-link btn btn-success" })
-
- 
-
-</p>
-@*<button id="modal-opener">Create New</button>*@
+<h2>ABM - Clientes</h2>
+<br />
 <table class="table">
     <tr>
         <th>
@@ -55,51 +20,34 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.ClientID }, new { @class = "modal-link btn btn-primary glyphicon glyphicon-pencil btnEdit" })
+                @Html.ActionLink(" ", "Details", new { id = item.ClientID }, new { @class = "modal-link btn btn-success glyphicon glyphicon-list-alt btnDetails" })
+                @Html.ActionLink(" ", "Delete", new { id = item.ClientID }, new { @class = "modal-link btn btn-danger glyphicon glyphicon-remove btnDelete" })
+            </td>
+        </tr>
+    }
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            <a href="@Url.Action("Edit", "Clients", new { id=item.ClientID })">
-                <span class="glyphicon glyphicon-pencil"></span>
-            </a> | 
-            <a href="@Url.Action("Details", "Clients", new { id=item.ClientID })">
-                <span class="glyphicon glyphicon-list-alt"></span>
-            </a> | 
-            <a href="@Url.Action("Delete", "Clients", new { id=item.ClientID })">
-                <span class="glyphicon glyphicon-trash"></span>
-            </a>
+            <p>
+                @Html.ActionLink("Alta Nuevo Cliente", "Create", null, null, new { @class = "btn btn-small btn-info btnCreate" })
+            </p>
         </td>
     </tr>
-}
-
 </table>
-<!---
- Se crea un div de la clase "dialog-modal" que contiene una llamada a AJAX y que va a ser el formulario que se abra dentro del modal contenido en el layout
- -->
-<div id="dialog-modal" title="Basic Modal Dialog">
-    @using (Ajax.BeginForm("index", new AjaxOptions { UpdateTargetId = "ID", OnSuccess = "onSuccess" }))
-    {
-     <div><p>Hola e-builders</p></div>
-    }
-</div>
 
-
-@*<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
-    <a href="#close" title="Close" class="modal-close-btn">X</a>
-    <div class="modal-content" style="width:500px !important; margin: 10px auto !important ">
-        <div class="modal-body"></div>
-    </div>
-</div>*@
-
-<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
-    
+<div id="dialogDiv" class="modal fade" tabindex="-1" role="dialog">
+    <div id='dialogContent'></div>
 </div><!-- /.modal -->
-

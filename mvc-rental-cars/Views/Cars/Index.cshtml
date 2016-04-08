@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Entities.Car>
+
+@{
+    ViewBag.Title = "ABM - Automoviles";
+}
+
+<h2>ABM - Automoviles</h2>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Doamin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DailyTariff)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AutomaticDrive)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doamin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DailyTariff)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AutomaticDrive)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.CarID }, new { @class = "modal-link btn btn-primary glyphicon glyphicon-pencil btnEdit" })
+                @Html.ActionLink(" ", "Details", new { id = item.CarID }, new { @class = "modal-link btn btn-success glyphicon glyphicon-list-alt btnDetails" })
+                @Html.ActionLink(" ", "Delete", new { id = item.CarID }, new { @class = "modal-link btn btn-danger glyphicon glyphicon-remove btnDelete" })
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            <p>
+                @Html.ActionLink("Alta Nuevo Vehiculo", "Create", null, null, new { @class = "btn btn-small btn-info btnCreate" })
+            </p>
+        </td>
+    </tr>
+</table>
+
+
+<div id="dialogDiv" class="modal fade" tabindex="-1" role="dialog">
+    <div id='dialogContent'></div>
+</div><!-- /.modal -->

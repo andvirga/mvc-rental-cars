@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace mvc_rental_cars.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()

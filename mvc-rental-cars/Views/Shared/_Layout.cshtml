@@ -7,40 +7,87 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
 
     <!--
         Se añade el siguiente script para hacer que se abra un formulario modal cada vez que se cliquea un objeto con la clase "dialog-modal"
         -->
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
-    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
-    <script>
-        $(function () {
-            $("#dialog-modal").dialog({
-                autoOpen: false,
-                modal: true,
-                buttons: [
-               {
-                   text: "Ok",
-                   icons: {
-                       primary: "ui-icon-heart"
-                   },
-                   click: function () {
-                       $(this).dialog("close");
-                   }
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript">
+    $(function () {
 
-                   // Uncommenting the following line would hide the text,
-                   // resulting in the label being used as a tooltip
-                   //showText: false
-               }
-                ]
+        //Optional: turn the chache off
+        $.ajaxSetup({ cache: false });
+
+        $('.btnCreate').click(function () {
+            $('#dialogContent').load(this.href, function () {
+                $('#dialogDiv').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
             });
-            $("#modal-opener").click(function () {
-                $("#dialog-modal").dialog("open");
-            });
+            return false;
         });
-        function onSuccess() {
-            $("#dialog-modal").dialog("close");
-        }
+
+        $('.btnEdit').click(function () {
+            $('#dialogContent').load(this.href, function () {
+                $('#dialogDiv').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
+            });
+            return false;
+        });
+
+        $('.btnDetails').click(function () {
+            $('#dialogContent').load(this.href, function () {
+                $('#dialogDiv').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
+            });
+            return false;
+        });
+
+
+        $('.btnDelete').click(function () {
+            $('#dialogContent').load(this.href, function () {
+                $('#dialogDiv').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
+            });
+            return false;
+        });
+
+
+    });
+
+    function bindForm(dialog) {
+        $('form', dialog).submit(function () {
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        $('#dialogDiv').modal('hide');
+                        // Refresh:
+                        location.reload();
+                    } else {
+                        $('#dialogContent').html(result);
+                        bindForm();
+                    }
+                }
+            });
+            return false;
+        });
+    }
+
     </script>
 
 </head>
@@ -59,6 +106,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Clientes", "Index", "Clients")</li>
+                    <li>@Html.ActionLink("Autos", "Index", "Cars")</li>
                     <li>@Html.ActionLink("Acerca De", "About", "Home")</li>
                     <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
                 </ul>
