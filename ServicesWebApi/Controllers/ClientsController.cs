@@ -8,6 +8,7 @@ using Entities;
 using DataAccessLayer;
 using Newtonsoft.Json;
 
+
 namespace ServicesWebApi.Controllers
 {
    
@@ -34,8 +35,13 @@ namespace ServicesWebApi.Controllers
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public HttpResponseMessage PostClient(Client client)
         {
+            client = db.ClientContext.Add(client);
+            db.SaveChanges();
+            var response = new HttpResponseMessage(HttpStatusCode.Created);
+            response.Headers.Location = new Uri(Request.RequestUri, "/api/clients" + client.ClientID.ToString());
+            return response;
         }
 
         // PUT api/values/5
@@ -44,8 +50,16 @@ namespace ServicesWebApi.Controllers
         }
 
         // DELETE api/values/5
-        public void Delete(int id)
+        public Client DeleteClient(int id)
         {
+            Client client = db.ClientContext.Find(id);
+            if (client == null)
+            {
+              throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            db.ClientContext.Remove(client);
+            db.SaveChanges();
+            return client;
         }
     }
 }
