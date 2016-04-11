@@ -82,6 +82,10 @@
                         $('#dialogContent').html(result);
                         bindForm();
                     }
+                },
+                error: function (result) {
+                    $('#dialogContent').html(result);
+                    bindForm();
                 }
             });
             return false;

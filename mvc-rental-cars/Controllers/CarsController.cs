@@ -8,12 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using DataAccessLayer;
 using Entities;
+using System.Diagnostics;
 
 namespace mvc_rental_cars.Controllers
 {
     public class CarsController : Controller
     {
         private RentalCarsDBContext db = new RentalCarsDBContext();
+
+        public const String ValidationErrorMessage = "Error de Validación. Por favor revise los datos ingresados";
+        public const String ExceptionErrorMessage = "Ocurrió una excepción no esperada. Contactar con Departamento Sistemas";
 
         // GET: Cars
         public ActionResult Index()
@@ -24,18 +28,27 @@ namespace mvc_rental_cars.Controllers
         // GET: Cars/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            Car car = new Car();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                //--Searching the client into the context.
+                car = db.CarContext.Find(id);
+
+                if (car == null)
+                    return HttpNotFound();
             }
-            Car car = db.CarContext.Find(id);
-            if (car == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                //--If an exception occurs, show the message and add it to EventViewer.
+                ModelState.AddModelError("", ExceptionErrorMessage);
+                EventLog.WriteEntry("Details", e.Message, EventLogEntryType.Error);
             }
-            return PartialView("Details",car);
+            return PartialView("Details", car);
         }
-   
+
         // GET: Cars/Create
         public ActionResult Create()
         {
@@ -46,26 +59,25 @@ namespace mvc_rental_cars.Controllers
         [HttpPost]
         public ActionResult Create(Car car)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                //--If there isn't any validation errors, save the model into the context.
+                if (ModelState.IsValid)
                 {
                     db.CarContext.Add(car);
                     db.SaveChanges();
-                    //return RedirectToAction("Index");
                     return Json(new { success = true });
                 }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", e.Message);
-                }
-
+                //--If a validation error occurs add it to the ModelState.
+                ModelState.AddModelError("", ValidationErrorMessage);
             }
-
-            //Something bad happened
+            catch (Exception e)
+            {
+                //--If an exception occurs, show the message and add it to EventViewer.
+                ModelState.AddModelError("", ExceptionErrorMessage);
+                EventLog.WriteEntry("Create", e.Message, EventLogEntryType.Error);
+            }
             return PartialView("Create", car);
-
-
         }
 
         // GET: Cars/Edit/5
@@ -86,23 +98,24 @@ namespace mvc_rental_cars.Controllers
         [HttpPost]
         public ActionResult Edit(Car car)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                //--If there isn't any validation errors, save the model into the context.
+                if (ModelState.IsValid)
                 {
                     db.Entry(car).State = EntityState.Modified;
                     db.SaveChanges();
-
                     return Json(new { success = true });
                 }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", e.Message);
-                }
-
+                //--If a validation error occurs add it to the ModelState.
+                ModelState.AddModelError("", ValidationErrorMessage);
             }
-
-            //Something bad happened
+            catch (Exception e)
+            {
+                //--If an exception occurs, show the message and add it to EventViewer.
+                ModelState.AddModelError("", ExceptionErrorMessage);
+                EventLog.WriteEntry("Edit", e.Message, EventLogEntryType.Error);
+            }
             return PartialView("Edit", car);
         }
 
@@ -127,17 +140,19 @@ namespace mvc_rental_cars.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
+            //--Deleting the model into the context.
             try
             {
                 Car car = db.CarContext.Find(id);
                 db.CarContext.Remove(car);
                 db.SaveChanges();
-
                 return Json(new { success = true });
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", e.Message);
+                //--If an exception occurs, show the message and add it to EventViewer.
+                ModelState.AddModelError("", ExceptionErrorMessage);
+                EventLog.WriteEntry("Delete", e.Message, EventLogEntryType.Error);
             }
             return PartialView("Delete");
         }
