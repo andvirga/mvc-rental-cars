@@ -39,9 +39,10 @@ namespace ServicesWebApi.Controllers
         {
             client = db.ClientContext.Add(client);
             db.SaveChanges();
-            var response = new HttpResponseMessage(HttpStatusCode.Created);
+            var response = Request.CreateResponse<Client>(HttpStatusCode.Created,client);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/clients" + client.ClientID.ToString());
             return response;
+
         }
 
         // PUT api/values/5
@@ -61,5 +62,6 @@ namespace ServicesWebApi.Controllers
             db.SaveChanges();
             return client;
         }
+
     }
 }
