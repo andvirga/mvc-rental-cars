@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Welcome to the site!!!</title>
+    <link href="/Content/Demo.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/knockout-3.4.0.js"></script>
+    <script>
+        $(function () {
+            $("#getClients").click(function () {
+                // We're using a Knockout model. This clears out the existing clients.
+                viewModel.clients([]);
+
+                $.get('/api/clients', function (data) {
+                    // Update the Knockout model (and thus the UI) with the clients received back 
+                    // from the Web API call.
+                    viewModel.clients(data);
+                });
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <div class="demo-navigation">
+            <a href="default.htm">&lt;&lt;&lt; Back</a>
+            | Demo 1 Simple Get |
+            <a href="demo2-crud.htm">On to Demo 2 - Simple CRUD &gt;&gt;&gt;</a>
+        </div>
+    </nav>
+    <div id="content">
+
+        <div id="demo-actions">
+            <div>
+                <legend>Get Clients</legend>
+                <button id="getClients">Go!</button>
+            </div>
+        </div>
+        <div id="article">
+            <p>
+                This first demo shows a very simple GET scenario. Click on the button to
+                use jQuery to retrieve client data from a Web API endpoint and then display
+                the contents of that payload in the UI.
+            </p>
+           
+        </div>
+        <ul data-bind="template: {name: 'clientTemplate', foreach: clients}"></ul>
+
+        <script id="clientTemplate" type="text/html">
+            <li class="client">
+                <header>
+                    <div class="info">
+                        <strong><span data-bind="text:FirstName"></span></strong>
+                    </div>
+                </header>
+                <div class="body">
+                    <p data-bind="text: Email"></p>
+
+                </div>
+            </li>
+        </script>
+
+        <script type="text/javascript">
+            viewModel = {
+                clients: ko.observableArray([]),
+               
+            };
+           
+          ko.applyBindings(viewModel);
+        </script>
+    </div>
+</body>
+</html>
