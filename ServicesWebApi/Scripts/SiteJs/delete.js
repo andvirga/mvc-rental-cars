@@ -11,8 +11,9 @@
             statusCode: {
                 200: function (data) {
                     viewModel.clients.remove(
+
                         function (client) {
-                            return client.ID == data.ID;
+                            return client.ClientID == data.ClientID;
                         }
                     );
                 }
