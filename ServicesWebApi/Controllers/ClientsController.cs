@@ -17,13 +17,14 @@ namespace ServicesWebApi.Controllers
         //--Contexto
         private RentalCarsDBContext db = new RentalCarsDBContext();
         //GET api/values
-        public IEnumerable<Client> GetClients()
+        public string GetClients()
         {
-            return db.ClientContext.ToList();
+           return JsonConvert.SerializeObject(db.ClientContext.ToList());
+          
         }
         
         // GET api/values/5
-        public Client Get(int id)
+        public string Get(int id)
         {
            
             Client client = db.ClientContext.Find(id);
@@ -31,7 +32,7 @@ namespace ServicesWebApi.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
-            return client;
+            return JsonConvert.SerializeObject(client);
         }
 
         // POST api/values
