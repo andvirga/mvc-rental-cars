@@ -10,7 +10,7 @@ namespace Entities
     public class Client
     {
         #region Properties
-
+        [Key]
         /// <summary>
         /// Id del Cliente
         /// </summary>

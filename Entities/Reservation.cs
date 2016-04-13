@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entities
 {
@@ -8,15 +9,28 @@ namespace Entities
     /// </summary>
     public class Reservation
     {
+        [Key]
         /// <summary>
         /// ID de Alquiler
         /// </summary>
         public Int64 ReservationID { get; set; }
 
         /// <summary>
+        /// Id del Cliente
+        /// </summary>
+        [Required]
+        public Int64 ClientID { get; set; }
+
+        /// <summary>
+        /// ID de Auto
+        /// </summary>
+        [Required]
+        public Int64 CarID { get; set; }
+
+        /// <summary>
         /// Auto alquilado
         /// </summary>
-        public virtual Car RentedCar { get; set; }
+        public virtual Car Car { get; set; }
 
         /// <summary>
         /// Cliente asociado
@@ -26,11 +40,15 @@ namespace Entities
         /// <summary>
         /// Fecha Inicio del alquiler
         /// </summary>
+        [Required]
+        [Display(Name = "Fecha Inicio de Reserva")]
         public DateTime StartDate { get; set; }
 
         /// <summary>
         /// Fecha fin del alquiler
         /// </summary>
+        [Required]
+        [Display(Name = "Fecha Fin de Reserva")]
         public DateTime EndDate { get; set; }
     }
 }

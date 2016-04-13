@@ -9,43 +9,38 @@ using System.Web.Mvc;
 using DataAccessLayer;
 using Entities;
 using System.Diagnostics;
+using DataAccessLayer.Repository;
 
 namespace mvc_rental_cars.Controllers
 {
     public class CarsController : Controller
     {
-        private RentalCarsDBContext db = new RentalCarsDBContext();
-
         public const String ValidationErrorMessage = "Error de Validación. Por favor revise los datos ingresados";
-        public const String ExceptionErrorMessage = "Ocurrió una excepción no esperada. Contactar con Departamento Sistemas";
+
+        /// <summary>
+        /// Car Repository
+        /// </summary>
+        private CarRepository carRepository = new CarRepository();
 
         // GET: Cars
         public ActionResult Index()
         {
-            return View(db.CarContext.ToList());
+            return View(this.carRepository.GetAll());
         }
 
         // GET: Cars/Details/5
         public ActionResult Details(long? id)
         {
             Car car = new Car();
-            try
-            {
-                if (id == null)
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                //--Searching the client into the context.
-                car = db.CarContext.Find(id);
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                if (car == null)
-                    return HttpNotFound();
-            }
-            catch (Exception e)
-            {
-                //--If an exception occurs, show the message and add it to EventViewer.
-                ModelState.AddModelError("", ExceptionErrorMessage);
-                EventLog.WriteEntry("Details", e.Message, EventLogEntryType.Error);
-            }
+            car = this.carRepository.GetByID(id.Value);
+
+            if (car == null)
+                return HttpNotFound();
+
             return PartialView("Details", car);
         }
 
@@ -59,79 +54,63 @@ namespace mvc_rental_cars.Controllers
         [HttpPost]
         public ActionResult Create(Car car)
         {
-            try
+            Car carCreated = car;
+
+            //--If there isn't any validation errors, save the model into the context.
+            if (ModelState.IsValid)
             {
-                //--If there isn't any validation errors, save the model into the context.
-                if (ModelState.IsValid)
-                {
-                    db.CarContext.Add(car);
-                    db.SaveChanges();
-                    return Json(new { success = true });
-                }
+                carCreated = this.carRepository.Create(car);
+                return Json(new { success = true });
+            }
+            else
+            {
                 //--If a validation error occurs add it to the ModelState.
                 ModelState.AddModelError("", ValidationErrorMessage);
             }
-            catch (Exception e)
-            {
-                //--If an exception occurs, show the message and add it to EventViewer.
-                ModelState.AddModelError("", ExceptionErrorMessage);
-                EventLog.WriteEntry("Create", e.Message, EventLogEntryType.Error);
-            }
-            return PartialView("Create", car);
+
+            return PartialView("Create", carCreated);
         }
 
         // GET: Cars/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Car car = db.CarContext.Find(id);
+
+            Car car = this.carRepository.GetByID(id.Value);
+
             if (car == null)
-            {
                 return HttpNotFound();
-            }
+
             return PartialView("Edit", car);
         }
 
         [HttpPost]
         public ActionResult Edit(Car car)
         {
-            try
+            //--If there isn't any validation errors, save the model into the context.
+            if (ModelState.IsValid)
             {
-                //--If there isn't any validation errors, save the model into the context.
-                if (ModelState.IsValid)
-                {
-                    db.Entry(car).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return Json(new { success = true });
-                }
-                //--If a validation error occurs add it to the ModelState.
-                ModelState.AddModelError("", ValidationErrorMessage);
+                this.carRepository.Update(car);
+                return Json(new { success = true });
             }
-            catch (Exception e)
-            {
-                //--If an exception occurs, show the message and add it to EventViewer.
-                ModelState.AddModelError("", ExceptionErrorMessage);
-                EventLog.WriteEntry("Edit", e.Message, EventLogEntryType.Error);
-            }
+            //--If a validation error occurs add it to the ModelState.
+            ModelState.AddModelError("", ValidationErrorMessage);
+
             return PartialView("Edit", car);
         }
 
         // GET: Cars/Delete/5
         public ActionResult Delete(long? id)
         {
-
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Car car = db.CarContext.Find(id);
+
+            Car car = this.carRepository.GetByID(id.Value);
+
             if (car == null)
-            {
                 return HttpNotFound();
-            }
+
             return PartialView("Delete", car);
         }
 
@@ -141,29 +120,18 @@ namespace mvc_rental_cars.Controllers
         public ActionResult DeleteConfirmed(long id)
         {
             //--Deleting the model into the context.
-            try
-            {
-                Car car = db.CarContext.Find(id);
-                db.CarContext.Remove(car);
-                db.SaveChanges();
-                return Json(new { success = true });
-            }
-            catch (Exception e)
-            {
-                //--If an exception occurs, show the message and add it to EventViewer.
-                ModelState.AddModelError("", ExceptionErrorMessage);
-                EventLog.WriteEntry("Delete", e.Message, EventLogEntryType.Error);
-            }
-            return PartialView("Delete");
+            Car car = this.carRepository.GetByID(id);
+            this.carRepository.Delete(car);
+            return Json(new { success = true });
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

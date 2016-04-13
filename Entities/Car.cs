@@ -19,8 +19,8 @@ namespace Entities
         /// </summary>
         [Required]
         [Display(Name = "Patente")]
-        [RegularExpression(@"^[a-z]{3}[0-9]{3}$", ErrorMessage = "Patente invalida")]
-        public String Doamin { get; set; }
+        [RegularExpression(@"^[A-Z]{3}[0-9]{3}$", ErrorMessage = "Formato de Patente invalido: Debe ser AAA001")]
+        public String Domain { get; set; }
 
         /// <summary>
         /// Marca del Auto
