@@ -9,6 +9,9 @@ using System.Web.Mvc;
 using DataAccessLayer;
 using Entities;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace mvc_rental_cars.Controllers
 {
@@ -22,9 +25,24 @@ namespace mvc_rental_cars.Controllers
         public const String ExceptionErrorMessage = "Ocurrió una excepción no esperada. Contactar con Departamento Sistemas";
 
         // GET: Clients
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.ClientContext.ToList());
+            List<Client> clients = new List<Client>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:31014/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // HTTP GET
+                HttpResponseMessage response = await client.GetAsync("api/clients");
+                if (response.IsSuccessStatusCode)
+                {
+                    clients = await response.Content.ReadAsAsync<List<Client>>();
+
+                }
+            }
+            return View(clients.ToList());
         }
 
         // GET: Clients/Details/5

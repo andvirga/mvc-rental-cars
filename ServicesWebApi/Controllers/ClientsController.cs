@@ -17,12 +17,23 @@ namespace ServicesWebApi.Controllers
         //--Contexto
         private RentalCarsDBContext db = new RentalCarsDBContext();
         //GET api/values
-        public string GetClients()
+
+
+        #region GET
+     
+        public IEnumerable<Client> GetClients()
         {
-           return JsonConvert.SerializeObject(db.ClientContext.ToList());
+            return db.ClientContext.ToList();
           
         }
-        
+        #region Paging
+        public IEnumerable<Client> GetClients(int pageIndex, int pageSize)
+        {
+            return db.ClientContext.ToList().Skip(pageIndex * pageSize).Take(pageSize);
+
+        }
+
+        #endregion 
         // GET api/values/5
         public string Get(int id)
         {
