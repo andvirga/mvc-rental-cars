@@ -65,9 +65,25 @@
     <Compile Include="Migrations\201604071813155_EmailRequired.Designer.cs">
       <DependentUpon>201604071813155_EmailRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604131306282_New Model.cs" />
+    <Compile Include="Migrations\201604131306282_New Model.Designer.cs">
+      <DependentUpon>201604131306282_New Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604131337019_NewModel2.cs" />
+    <Compile Include="Migrations\201604131337019_NewModel2.Designer.cs">
+      <DependentUpon>201604131337019_NewModel2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RentalCarsDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CarRepository.cs" />
+    <Compile Include="Repository\ClientRepository.cs" />
+    <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\ICarRepository.cs" />
+    <Compile Include="Repository\IClientRepository.cs" />
+    <Compile Include="Repository\IGenericRepository.cs" />
+    <Compile Include="Repository\ReservationRepository.cs" />
+    <Compile Include="Repository\IReservationRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -91,6 +107,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604071813155_EmailRequired.resx">
       <DependentUpon>201604071813155_EmailRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604131306282_New Model.resx">
+      <DependentUpon>201604131306282_New Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604131337019_NewModel2.resx">
+      <DependentUpon>201604131337019_NewModel2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

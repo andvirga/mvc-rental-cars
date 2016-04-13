@@ -12,7 +12,7 @@ namespace DataAccessLayer.Migrations
                 c => new
                     {
                         CarID = c.Long(nullable: false, identity: true),
-                        Doamin = c.String(),
+                        Domain = c.String(),
                         Brand = c.String(),
                         Model = c.String(),
                         DailyTariff = c.Decimal(nullable: false, precision: 18, scale: 2),

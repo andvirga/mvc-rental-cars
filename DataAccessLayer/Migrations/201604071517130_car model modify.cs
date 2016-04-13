@@ -7,7 +7,7 @@ namespace DataAccessLayer.Migrations
     {
         public override void Up()
         {
-            AlterColumn("dbo.Cars", "Doamin", c => c.String(nullable: false));
+            AlterColumn("dbo.Cars", "Domain", c => c.String(nullable: false));
             AlterColumn("dbo.Cars", "Brand", c => c.String(nullable: false));
             AlterColumn("dbo.Cars", "Model", c => c.String(nullable: false));
         }
@@ -16,7 +16,7 @@ namespace DataAccessLayer.Migrations
         {
             AlterColumn("dbo.Cars", "Model", c => c.String());
             AlterColumn("dbo.Cars", "Brand", c => c.String());
-            AlterColumn("dbo.Cars", "Doamin", c => c.String());
+            AlterColumn("dbo.Cars", "Domain", c => c.String());
         }
     }
 }
