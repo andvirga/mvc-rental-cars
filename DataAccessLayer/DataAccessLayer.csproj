@@ -73,6 +73,10 @@
     <Compile Include="Migrations\201604131337019_NewModel2.Designer.cs">
       <DependentUpon>201604131337019_NewModel2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604132032072_client doesnt have reservations.cs" />
+    <Compile Include="Migrations\201604132032072_client doesnt have reservations.Designer.cs">
+      <DependentUpon>201604132032072_client doesnt have reservations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RentalCarsDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604131337019_NewModel2.resx">
       <DependentUpon>201604131337019_NewModel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604132032072_client doesnt have reservations.resx">
+      <DependentUpon>201604132032072_client doesnt have reservations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

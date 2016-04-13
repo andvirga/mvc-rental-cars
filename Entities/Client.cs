@@ -41,9 +41,6 @@ namespace Entities
         /// <summary>
         /// Alquileres del Cliente
         /// </summary>
-        [Display(Name = "Alquileres")]
-        public virtual List<Reservation> Reservations { get; set; }
-
         #endregion
 
         #region Methods
