@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Comments Test Home Page</title>
+    <link href="/Content/Demo.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/knockout-3.4.0.js"></script>
+    <script src="Scripts/SiteJs/get-queryable.js"></script>
+    <script src="Scripts/SiteJs/get-querystring.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="demo-navigation">
+            <a href="demo2-crud.htm">&lt;&lt;&lt; Back</a>
+            | Demo 3 Paging |
+            <a href="demo4-validation.htm">On to Demo 4 - Validation &gt;&gt;&gt;</a>
+        </div>
+    </nav>
+    <div id="content">
+
+        <div id="demo-actions">
+            <div>
+                <legend>Paging Demos</legend>
+                <label for="pageSize">Size:</label> <input type="input" id="pageSize" class="paging" value="4" />
+                <label for="pageIndex">Index:</label> <input type="input" id="pageIndex" class="paging" value="0" />
+
+                <button id="getClientsPaging">Query String</button>
+                <button id="getClientsQueryable">Queryable</button>
+            </div>
+        </div>
+
+        <div id="article">
+            <p>
+                This is a demo of paging through data.
+            </p>
+            <p>
+                The "Query String" button calls code that demonstrates how a typical developer
+                might implement paging today.
+            </p>
+            <p>
+                The "Queryable" button turns it up a notch and shows paging using a service method
+                that returns an <code>IQueryable</code>. Note that the client code hasn't changed
+                much at all, but the server code is much simpler.
+            </p>
+
+        </div>
+
+        <ul data-bind="template: {name: 'clientTemplate', foreach: clients}"></ul>
+
+        <script id="clientTemplate" type="text/html">
+            <li class="client">
+                <header>
+                    <div class="info">
+                         <strong><span data-bind="text: FirstName"></span></strong>
+                        <strong><span data-bind="text: LastName"></span></strong>
+                    </div>
+                </header>
+                <div class="body">
+                    <p data-bind="text: Email"></p>
+
+                </div>
+            </li>
+        </script>
+
+        <script type="text/javascript">
+            viewModel = {
+                clients: ko.observableArray([])
+            };
+
+            ko.applyBindings(viewModel);
+        </script>
+    </div>
+</body>
+</html>
