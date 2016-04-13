@@ -7,25 +7,23 @@ using System.Web.Http;
 using Entities;
 using DataAccessLayer;
 using Newtonsoft.Json;
-
+using System.Web.Mvc;
+using System.Web.Http.Cors;
 
 namespace ServicesWebApi.Controllers
 {
-   
+    [EnableCors(origins: "https://localhost:44300", headers: "*", methods: "*")]
     public class ClientsController : ApiController
     {
         //--Contexto
         private RentalCarsDBContext db = new RentalCarsDBContext();
         //GET api/values
-
-
-        #region GET
-     
-        public IEnumerable<Client> GetClients()
+        
+        public string GetClients()
         {
-            return db.ClientContext.ToList();
-          
+           return JsonConvert.SerializeObject(db.ClientContext.ToList());
         }
+      
         #region Paging
         public IEnumerable<Client> GetClients(int pageIndex, int pageSize)
         {
@@ -34,6 +32,7 @@ namespace ServicesWebApi.Controllers
         }
 
         #endregion 
+       
         // GET api/values/5
         public string Get(int id)
         {

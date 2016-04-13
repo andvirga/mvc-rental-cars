@@ -3,9 +3,31 @@
 <head>
     <title></title>
 	<meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-
+    <div class="col-md-12">
+        <button id="btnClients" class="btn-md btn-success" onclick="getClients()">Get Clients from Ajax</button>
+        <label for="comment">Clients:</label>
+        <textarea class="form-control" rows="5" id="clientsTa"></textarea>
+    </div>
 </body>
 </html>
 <script src="Scripts/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    function getClients() {
+
+    
+        var url = 'https://localhost:44301/api/clients';
+        $.getJSON(url).done(function (data) {
+              // On success, 'data' contains a list of products
+            // Add a list item for the product.
+            var el = document.getElementById("clientsTa");
+            el.value = data;
+          });
+
+    }
+
+</script>

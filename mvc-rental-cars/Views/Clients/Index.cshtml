@@ -47,7 +47,39 @@
         </td>
     </tr>
 </table>
-
+<div class="row">
+    <div class="col-md-12">
+        <button id="btnClients" class="btn-md btn-success" onclick="getClients()">Get Clients from Ajax</button>
+        <button id="btnLimpiar" class="btn-md btn-danger" onclick="clearClients()">Clear Clients</button>
+    </div>
+</div>
+<div class="row">
+    <label for="clientsTa">Clients:</label>
+    <div class="col-md-12">
+        <textarea class="form-control" rows="5" id="clientsTa"></textarea>
+    </div>
+</div>
 <div id="dialogDiv" class="modal fade" tabindex="-1" role="dialog">
     <div id='dialogContent'></div>
 </div><!-- /.modal -->
+<script type="text/javascript">
+    function getClients() {
+
+        var url = 'https://localhost:44301/api/clients';
+        $.getJSON(url).done(function (data) {
+            // On success, 'data' contains a list of products
+            // Add a list item for the product.
+            var el = document.getElementById("clientsTa");
+            el.value = data;
+        });
+
+    }
+
+    function clearClients()
+    {
+        var el = document.getElementById("clientsTa");
+        el.value = "";
+
+    }
+
+</script>

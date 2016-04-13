@@ -21,7 +21,9 @@ namespace ServicesWebApi
 
             config.Filters.Add(new ValidateAttribute());
 
-          
+            ///ENABLE CROSS REQUEST
+            config.EnableCors();
+
 
             // Web API routes
             config.MapHttpAttributeRoutes();
