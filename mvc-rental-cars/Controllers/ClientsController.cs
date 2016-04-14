@@ -13,16 +13,19 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using DataAccessLayer.Repository;
 
 namespace mvc_rental_cars.Controllers
 {
     [Authorize]
     public class ClientsController : Controller
     {
-        //--Contexto
-        private RentalCarsDBContext db = new RentalCarsDBContext();
         public const String ValidationErrorMessage = "Error de Validación. Por favor revise los datos ingresados";
-        public const String ExceptionErrorMessage = "Ocurrió una excepción no esperada. Contactar con Departamento Sistemas";
+
+        /// <summary>
+        /// Client Repository
+        /// </summary>
+        private ClientRepository clientRepository = new ClientRepository();
 
         // GET: Clients
         public async Task<ActionResult> Index()
@@ -50,23 +53,16 @@ namespace mvc_rental_cars.Controllers
         public ActionResult Details(long? id)
         {
             Client client = new Client();
-            try
-            {
-                if (id == null)
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                
-                //--Searching the client into the context.
-                client = db.ClientContext.Find(id);
 
-                if (client == null)
-                    return HttpNotFound();
-            }
-            catch (Exception e)
-            {
-                //--If an exception occurs, show the message and add it to EventViewer.
-                ModelState.AddModelError("", ExceptionErrorMessage);
-                EventLog.WriteEntry("Details", e.Message, EventLogEntryType.Error);
-            }
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            //--Searching the client into the context.
+            client = this.clientRepository.GetByID(id.Value);
+
+            if (client == null)
+                return HttpNotFound();
+
             return PartialView("Details", client);
         }
 
@@ -79,37 +75,29 @@ namespace mvc_rental_cars.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(Client client)
         {
-            try
+
+            //--If there isn't any validation errors, save the model into the context.
+            if (ModelState.IsValid)
             {
-                //--If there isn't any validation errors, save the model into the context.
-                if (ModelState.IsValid)
+                using (var createClient = new HttpClient())
                 {
-                    using (var createClient = new HttpClient())
+                    createClient.BaseAddress = new Uri("http://localhost:31014/");
+                    createClient.DefaultRequestHeaders.Accept.Clear();
+                    createClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await createClient.PostAsJsonAsync("api/clients", client);
+                    // HTTP GET
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        createClient.BaseAddress = new Uri("http://localhost:31014/");
-                        createClient.DefaultRequestHeaders.Accept.Clear();
-                        createClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                        HttpResponseMessage response = await createClient.PostAsJsonAsync("api/clients", client);
-                        // HTTP GET
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            return Json(new { success = true });
-
-                        }
+                        return Json(new { success = true });
                     }
-                  
                 }
-                //--If a validation error occurs add it to the ModelState.
-                ModelState.AddModelError("", ValidationErrorMessage);
+
             }
-            catch (Exception e)
-            {
-                //--If an exception occurs, show the message and add it to EventViewer.
-                ModelState.AddModelError("", ExceptionErrorMessage);
-                EventLog.WriteEntry("Create", e.Message, EventLogEntryType.Error);
-            }
+            //--If a validation error occurs add it to the ModelState.
+            ModelState.AddModelError("", ValidationErrorMessage);
+
             return PartialView("Create", client);
         }
 
@@ -117,38 +105,29 @@ namespace mvc_rental_cars.Controllers
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.ClientContext.Find(id);
+
+            Client client = this.clientRepository.GetByID(id.Value);
+
             if (client == null)
-            {
                 return HttpNotFound();
-            }
+
             return PartialView("Edit", client);
         }
 
         [HttpPost]
         public ActionResult Edit(Client client)
         {
-            try
+
+            //--If there isn't any validation errors, save the model into the context.
+            if (ModelState.IsValid)
             {
-                //--If there isn't any validation errors, save the model into the context.
-                if (ModelState.IsValid)
-                {
-                    db.Entry(client).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return Json(new { success = true });
-                }
-                //--If a validation error occurs add it to the ModelState.
-                ModelState.AddModelError("", ValidationErrorMessage);
+                this.clientRepository.Update(client);
+                return Json(new { success = true });
             }
-            catch (Exception e)
-            {
-                //--If an exception occurs, show the message and add it to EventViewer.
-                ModelState.AddModelError("", ExceptionErrorMessage);
-                EventLog.WriteEntry("Edit", e.Message, EventLogEntryType.Error);
-            }
+            //--If a validation error occurs add it to the ModelState.
+            ModelState.AddModelError("", ValidationErrorMessage);
+
             return PartialView("Edit", client);
         }
 
@@ -156,14 +135,13 @@ namespace mvc_rental_cars.Controllers
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.ClientContext.Find(id);
+
+            Client client = this.clientRepository.GetByID(id.Value);
+
             if (client == null)
-            {
                 return HttpNotFound();
-            }
+
             return PartialView("Delete", client);
         }
 
@@ -173,29 +151,19 @@ namespace mvc_rental_cars.Controllers
         public ActionResult DeleteConfirmed(long id)
         {
             //--Deleting the model into the context.
-            try
-            {
-                Client client = db.ClientContext.Find(id);
-                db.ClientContext.Remove(client);
-                db.SaveChanges();
-                return Json(new { success = true });
-            }
-            catch (Exception e)
-            {
-                //--If an exception occurs, show the message and add it to EventViewer.
-                ModelState.AddModelError("", ExceptionErrorMessage);
-                EventLog.WriteEntry("Delete", e.Message, EventLogEntryType.Error);
-            }
-            return PartialView("Delete");
+
+            Client client = this.clientRepository.GetByID(id);
+            this.clientRepository.Delete(client);
+            return Json(new { success = true });
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

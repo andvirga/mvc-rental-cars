@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<Entities.Reservation>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Gestión de Reservas";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Gestión de Reservas</h2>
+<br />
 <table class="table">
     <tr>
         <th>
@@ -26,26 +23,37 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.Brand) @Html.DisplayFor(modelItem => item.Car.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Client.LastName), @Html.DisplayFor(model => item.Client.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.ReservationID }, new { @class = "modal-link btn btn-primary glyphicon glyphicon-pencil btnEdit" })
+                @Html.ActionLink(" ", "Details", new { id = item.ReservationID }, new { @class = "modal-link btn btn-success glyphicon glyphicon-list-alt btnDetails" })
+                @Html.ActionLink(" ", "Delete", new { id = item.ReservationID }, new { @class = "modal-link btn btn-danger glyphicon glyphicon-remove btnDelete" })
+            </td>
+        </tr>
+    }
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Car.Brand) @Html.DisplayFor(modelItem => item.Car.Model)
-        </td>
-        <td>
-            @Html.DisplayFor(model => item.Client.LastName), @Html.DisplayFor(model => item.Client.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReservationID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReservationID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ReservationID })
+            <p>
+                @Html.ActionLink("Alta Nueva Reserva", "Create", null, null, new { @class = "btn btn-small btn-info btnCreate" })
+            </p>
         </td>
     </tr>
-}
-
 </table>
+
+<div id="dialogDiv" class="modal fade" tabindex="-1" role="dialog">
+    <div id='dialogContent'></div>
+</div><!-- /.modal -->

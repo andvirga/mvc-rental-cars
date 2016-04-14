@@ -1,50 +1,53 @@
 ﻿@model Entities.Reservation
 
-@{
-    ViewBag.Title = "Details";
-}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">-- Detalle de la Reserva --</h4>
+        </div><!-- /.modal-header -->
+        <div class="modal-body">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Car.Domain)
+                    </dt>
 
-<h2>Details</h2>
+                    <dd>
+                        @Html.DisplayFor(model => model.Car.Domain)
+                    </dd>
 
-<div>
-    <h4>Reservation</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Car.Domain)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Client.FirstName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Car.Domain)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Client.FirstName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Client.FirstName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Client.FirstName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.StartDate)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.EndDate)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                </dl>
+            </div>
+            <p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </p>
+        </div><!-- /.modal-body -->
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

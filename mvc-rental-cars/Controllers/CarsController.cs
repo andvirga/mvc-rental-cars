@@ -13,6 +13,7 @@ using DataAccessLayer.Repository;
 
 namespace mvc_rental_cars.Controllers
 {
+    [Authorize]
     public class CarsController : Controller
     {
         public const String ValidationErrorMessage = "Error de Validación. Por favor revise los datos ingresados";

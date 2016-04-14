@@ -42,6 +42,7 @@ namespace Entities
         /// </summary>
         [Required]
         [Display(Name = "Fecha Inicio de Reserva")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime StartDate { get; set; }
 
         /// <summary>
@@ -49,6 +50,7 @@ namespace Entities
         /// </summary>
         [Required]
         [Display(Name = "Fecha Fin de Reserva")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime EndDate { get; set; }
     }
 }

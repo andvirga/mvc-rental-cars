@@ -15,6 +15,8 @@ namespace mvc_rental_cars.Controllers
     [Authorize]
     public class ReservationsController : Controller
     {
+        public const String ValidationErrorMessage = "Error de Validación. Por favor revise los datos ingresados";
+
         /// <summary>
         /// Reservation Repository
         /// </summary>
@@ -34,7 +36,7 @@ namespace mvc_rental_cars.Controllers
         public ActionResult Index()
         {
             //var reservationContext = db.ReservationContext.Include(r => r.Car).Include(r => r.Client);
-            //--Calling the Repository to get the list of all the reservations.
+            //--Calling the Repository to get the list of all the reservations. 
             return View(this.reservationRepo.GetAll());
         }
 
@@ -49,16 +51,16 @@ namespace mvc_rental_cars.Controllers
 
             if (reservation == null)
                 return HttpNotFound();
-            
-            return View(reservation);
+
+            return PartialView("Details", reservation);
         }
 
         // GET: Reservations/Create
         public ActionResult Create()
         {
-            ViewBag.CarID = new SelectList(this.carRepository.GetAll(), "CarID", "Domain");
-            ViewBag.ClientID = new SelectList(this.clientRepository.GetAll(), "ClientID", "LastName");
-            return View();
+            ViewBag.CarID = new SelectList(this.carRepository.FillCarDropDownList(), "CarID", "Domain");
+            ViewBag.ClientID = new SelectList(this.clientRepository.FillClientDropDownList(), "ClientID", "LastName");
+            return PartialView("Create");
         }
 
         // POST: Reservations/Create
@@ -74,12 +76,17 @@ namespace mvc_rental_cars.Controllers
             {
                 //--Calling the Repository to store the Reservation into the DBContext
                 resCreated = this.reservationRepo.Create(reservation);
-                return RedirectToAction("Index");
+                return Json(new { success = true });
+            }
+            else
+            {
+                ModelState.AddModelError("", ValidationErrorMessage);
             }
 
-            ViewBag.CarID = new SelectList(this.carRepository.GetAll(), "CarID", "Domain", reservation.CarID);
-            ViewBag.ClientID = new SelectList(this.clientRepository.GetAll(), "ClientID", "LastName", reservation.ClientID);
-            return View(resCreated);
+            ViewBag.CarID = new SelectList(this.carRepository.FillCarDropDownList(), "CarID", "Domain", reservation.CarID);
+            ViewBag.ClientID = new SelectList(this.clientRepository.FillClientDropDownList(), "ClientID", "LastName", reservation.ClientID);
+
+            return PartialView("Create", resCreated);
         }
 
         // GET: Reservations/Edit/5
@@ -92,10 +99,10 @@ namespace mvc_rental_cars.Controllers
 
             if (reservation == null)
                 return HttpNotFound();
-            
-            ViewBag.CarID = new SelectList(this.carRepository.GetAll(), "CarID", "Domain", reservation.CarID);
-            ViewBag.ClientID = new SelectList(this.clientRepository.GetAll(), "ClientID", "LastName", reservation.ClientID);
-            return View(reservation);
+
+            ViewBag.CarID = new SelectList(this.carRepository.FillCarDropDownList(), "CarID", "Domain", reservation.CarID);
+            ViewBag.ClientID = new SelectList(this.clientRepository.FillClientDropDownList(), "ClientID", "LastName", reservation.ClientID);
+            return PartialView("Edit", reservation);
         }
 
         // POST: Reservations/Edit/5
@@ -108,11 +115,11 @@ namespace mvc_rental_cars.Controllers
             if (ModelState.IsValid)
             {
                 this.reservationRepo.Update(reservation);
-                return RedirectToAction("Index");
+                return Json(new { success = true });
             }
-            ViewBag.CarID = new SelectList(this.carRepository.GetAll(), "CarID", "Domain", reservation.CarID);
-            ViewBag.ClientID = new SelectList(this.clientRepository.GetAll(), "ClientID", "LastName", reservation.ClientID);
-            return View(reservation);
+            ViewBag.CarID = new SelectList(this.carRepository.FillCarDropDownList(), "CarID", "Domain", reservation.CarID);
+            ViewBag.ClientID = new SelectList(this.clientRepository.FillClientDropDownList(), "ClientID", "LastName", reservation.ClientID);
+            return PartialView("Edit", reservation);
         }
 
         // GET: Reservations/Delete/5
@@ -126,7 +133,7 @@ namespace mvc_rental_cars.Controllers
             if (reservation == null)
                 return HttpNotFound();
             
-            return View(reservation);
+            return PartialView("Delete", reservation);
         }
 
         // POST: Reservations/Delete/5
@@ -138,7 +145,7 @@ namespace mvc_rental_cars.Controllers
 
             this.reservationRepo.Delete(reservation);
 
-            return RedirectToAction("Index");
+            return Json(new { success = true });
         }
 
         //protected override void Dispose(bool disposing)
