@@ -20,26 +20,6 @@ namespace DataAccessLayer.Repository
 
         #endregion
 
-        #region Members and Properties
-
-        private RentalCarsDBContext dbContext = null;
-
-        /// <summary>
-        /// Entity-Framework DBContext 'RentalCarsDBContext'
-        /// </summary>
-        protected RentalCarsDBContext DbContext
-        {
-            get
-            {
-                if (this.dbContext == null)
-                    this.dbContext = new RentalCarsDBContext();
-
-                return dbContext;
-            }
-        }
-
-        #endregion
-
         #region Abstract CRUD Methods
 
         /// <summary>
@@ -50,8 +30,8 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                this.DbContext.Set<T>().Add(pEntity);
-                this.DbContext.SaveChanges();
+                RentalCarsDBContext.Instance.Set<T>().Add(pEntity);
+                RentalCarsDBContext.Instance.SaveChanges();
             }
             catch (Exception e)
             {
@@ -68,8 +48,8 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                this.DbContext.Set<T>().Remove(pEntity);
-                this.DbContext.SaveChanges();
+                RentalCarsDBContext.Instance.Set<T>().Remove(pEntity);
+                RentalCarsDBContext.Instance.SaveChanges();
             }
             catch (Exception e)
             {
@@ -82,7 +62,7 @@ namespace DataAccessLayer.Repository
         /// </summary>
         public IEnumerable<T> GetAll()
         {
-            return this.DbContext.Set<T>().ToList();
+            return RentalCarsDBContext.Instance.Set<T>().ToList();
         }
 
         /// <summary>
@@ -95,7 +75,7 @@ namespace DataAccessLayer.Repository
 
             try
             {
-                pEntity = this.DbContext.Set<T>().Find(pID);
+                pEntity = RentalCarsDBContext.Instance.Set<T>().Find(pID);
             }
             catch (Exception e)
             {
@@ -112,8 +92,8 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                this.DbContext.Entry<T>(pEntity).State = EntityState.Modified;
-                this.DbContext.SaveChanges();
+                RentalCarsDBContext.Instance.Entry<T>(pEntity).State = EntityState.Modified;
+                RentalCarsDBContext.Instance.SaveChanges();
             }
             catch (Exception e)
             {

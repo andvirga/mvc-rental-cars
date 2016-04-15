@@ -9,25 +9,28 @@ using DataAccessLayer;
 using Newtonsoft.Json;
 using System.Web.Mvc;
 using System.Web.Http.Cors;
+using DataAccessLayer.Repository;
 
 namespace ServicesWebApi.Controllers
 {
     [EnableCors(origins: "https://localhost:44300", headers: "*", methods: "*")]
     public class ClientsController : ApiController
     {
-        //--Contexto
-        private RentalCarsDBContext db = new RentalCarsDBContext();
+        /// <summary>
+        /// Client Repository (Access to the DataContext)
+        /// </summary>
+        private ClientRepository clientRepository = new ClientRepository();
+
         //GET api/values
-        
         public string GetClients()
         {
-           return JsonConvert.SerializeObject(db.ClientContext.ToList());
+           return JsonConvert.SerializeObject(this.clientRepository.GetAll());
         }
       
         #region Paging
         public IEnumerable<Client> GetClients(int pageIndex, int pageSize)
         {
-            return db.ClientContext.ToList().Skip(pageIndex * pageSize).Take(pageSize);
+            return this.clientRepository.GetAll().Skip(pageIndex * pageSize).Take(pageSize);
 
         }
 
@@ -36,8 +39,8 @@ namespace ServicesWebApi.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-           
-            Client client = db.ClientContext.Find(id);
+
+            Client client = this.clientRepository.GetByID(id);
             if (client == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -48,12 +51,11 @@ namespace ServicesWebApi.Controllers
         // POST api/values
         public HttpResponseMessage PostClient(Client client)
         {
-            client = db.ClientContext.Add(client);
-            db.SaveChanges();
+            client = this.clientRepository.Create(client);
+
             var response = Request.CreateResponse<Client>(HttpStatusCode.Created,client);
             response.Headers.Location = new Uri(Request.RequestUri, "/api/clients" + client.ClientID.ToString());
             return response;
-
         }
 
         // PUT api/values/5
@@ -64,13 +66,13 @@ namespace ServicesWebApi.Controllers
         // DELETE api/values/5
         public Client DeleteClient(int id)
         {
-            Client client = db.ClientContext.Find(id);
+            Client client = this.clientRepository.GetByID(id);
+
             if (client == null)
-            {
               throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-            db.ClientContext.Remove(client);
-            db.SaveChanges();
+
+            this.clientRepository.Delete(client);
+
             return client;
         }
 
