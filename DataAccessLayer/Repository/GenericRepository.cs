@@ -30,7 +30,7 @@ namespace DataAccessLayer.Repository
         /// <summary>
         /// Contains the Entity Framework DBContext.
         /// </summary>
-        public RentalCarsDBContext RentalCarsDBContext
+        protected RentalCarsDBContext RentalCarsDBContext
         {
             get
             {
