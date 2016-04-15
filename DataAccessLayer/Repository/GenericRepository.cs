@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repository
 {
-    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
+    public abstract class GenericRepository<T> : IGenericRepository<T>, IDisposable where T : class
     {
         #region Constants
 
@@ -17,6 +17,29 @@ namespace DataAccessLayer.Repository
         /// Exception Source: GenericRepository
         /// </summary>
         public const String EXCEPTION_SOURCE = "GenericRepository";
+
+        #endregion
+
+        #region DataContext
+
+        /// <summary>
+        /// Entity Framework: RentalCars DB Context
+        /// </summary>
+        private RentalCarsDBContext rentalCarsDBContext;
+
+        /// <summary>
+        /// Contains the Entity Framework DBContext.
+        /// </summary>
+        public RentalCarsDBContext RentalCarsDBContext
+        {
+            get
+            {
+                if (rentalCarsDBContext == null)
+                    rentalCarsDBContext = new RentalCarsDBContext();
+
+                return this.rentalCarsDBContext;
+            }
+        }
 
         #endregion
 
@@ -30,8 +53,8 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                RentalCarsDBContext.Instance.Set<T>().Add(pEntity);
-                RentalCarsDBContext.Instance.SaveChanges();
+                this.RentalCarsDBContext.Set<T>().Add(pEntity);
+                this.RentalCarsDBContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -48,8 +71,8 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                RentalCarsDBContext.Instance.Set<T>().Remove(pEntity);
-                RentalCarsDBContext.Instance.SaveChanges();
+                this.RentalCarsDBContext.Set<T>().Remove(pEntity);
+                this.RentalCarsDBContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -62,7 +85,7 @@ namespace DataAccessLayer.Repository
         /// </summary>
         public IEnumerable<T> GetAll()
         {
-            return RentalCarsDBContext.Instance.Set<T>().ToList();
+            return this.RentalCarsDBContext.Set<T>().ToList();
         }
 
         /// <summary>
@@ -75,7 +98,7 @@ namespace DataAccessLayer.Repository
 
             try
             {
-                pEntity = RentalCarsDBContext.Instance.Set<T>().Find(pID);
+                pEntity = this.RentalCarsDBContext.Set<T>().Find(pID);
             }
             catch (Exception e)
             {
@@ -92,8 +115,8 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                RentalCarsDBContext.Instance.Entry<T>(pEntity).State = EntityState.Modified;
-                RentalCarsDBContext.Instance.SaveChanges();
+                this.RentalCarsDBContext.Entry<T>(pEntity).State = EntityState.Modified;
+                this.RentalCarsDBContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -101,6 +124,31 @@ namespace DataAccessLayer.Repository
             }
             return pEntity;
         }
+
+        #region IDisposable Support
+
+        private bool disposed = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                    this.RentalCarsDBContext.Dispose();
+                
+                disposed = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+
+        #endregion
 
         #endregion
     }

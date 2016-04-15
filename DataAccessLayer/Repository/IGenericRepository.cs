@@ -1,11 +1,11 @@
 ﻿using Entities;
+using System;
 using System.Collections.Generic;
 
 namespace DataAccessLayer.Repository
 {
-    public interface IGenericRepository<T>
+    public interface IGenericRepository<T> : IDisposable
     {
-
         IEnumerable<T> GetAll();
 
         T GetByID(long pID);

@@ -29,32 +29,12 @@ namespace DataAccessLayer
 
         #endregion
 
-        #region Singleton Implementation
-
-        /// <summary>
-        /// Object to Instantiate
-        /// </summary>
-        private static RentalCarsDBContext rentalCarsDBContext = null;
+        #region Constructor
 
         /// <summary>
         /// Constructor (only used in the Instance property)
         /// </summary>
-        protected RentalCarsDBContext() { }
-
-        /// <summary>
-        /// Property that access to the Singleton Instance of the RentalCarsDBContext Object.
-        /// </summary>
-        public static RentalCarsDBContext Instance
-        {
-            get
-            {
-                //-- The object is instantiated one single time, and then returned every time that we access to this property.
-                if (rentalCarsDBContext == null)
-                    rentalCarsDBContext = new RentalCarsDBContext();
-
-                return rentalCarsDBContext;
-            }
-        }
+        public RentalCarsDBContext() { }
 
         #endregion
     }

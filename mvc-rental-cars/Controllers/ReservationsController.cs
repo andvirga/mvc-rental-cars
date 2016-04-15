@@ -148,13 +148,20 @@ namespace mvc_rental_cars.Controllers
             return Json(new { success = true });
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        /// <summary>
+        /// Dìspose the Controller and the Repositories
+        /// </summary>
+        /// <param name="disposing">Dispose Enable/Disable</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.clientRepository.Dispose();
+                this.carRepository.Dispose();
+                this.reservationRepo.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }
