@@ -149,6 +149,18 @@ namespace mvc_rental_cars.Controllers
         }
 
         /// <summary>
+        /// Search for all the reservations for a particular Client
+        /// </summary>
+        /// <param name="clientName">Client First Name or Last Name</param>
+        /// <returns>Reservations</returns>
+        public ActionResult FindReservation(string clientName)
+        {
+            List<Reservation> reservations = this.reservationRepo.FindReservationsByClientName(clientName);
+
+            return PartialView("FindReservations", reservations);
+        }
+
+        /// <summary>
         /// Dìspose the Controller and the Repositories
         /// </summary>
         /// <param name="disposing">Dispose Enable/Disable</param>

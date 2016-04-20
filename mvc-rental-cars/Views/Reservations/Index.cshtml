@@ -54,6 +54,44 @@
     </tr>
 </table>
 
+<br />
+
+<table>
+    <tr>
+        <td colspan="2" align="center">
+            <h4>
+                Buscar Reservas por Cliente
+            </h4>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" width="50%">
+            @Html.Label("lblSearch", "Nombre o Apellido: ")
+        </td>
+        <td align="left" width="50%">
+            <form action="FindReservation" method="get">
+                <input type="text" id="txtClientName" />
+                <button id="btnSearch" value="Submit" class="btn btn-primary glyphicon glyphicon-search" />
+            </form>
+        </td>
+    </tr>
+</table>
+
 <div id="dialogDiv" class="modal fade" tabindex="-1" role="dialog">
     <div id='dialogContent'></div>
 </div><!-- /.modal -->
+
+<script>
+    $('#btnSearch').click(function () {
+        var urlParams = encodeURIComponent($("#txtClientName").val());
+        var urlEncode = "/Reservations/FindReservation?clientName=" + urlParams;
+        $('#dialogContent').load(urlEncode, function () {
+            $('#dialogDiv').modal({
+                backdrop: 'static',
+                keyboard: true
+            }, 'show');
+            bindForm(this);
+        });
+        return false;
+    });
+</script>
