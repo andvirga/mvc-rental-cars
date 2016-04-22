@@ -25,9 +25,10 @@ namespace ServicesWebApi
             config.EnableCors();
 
 
-            // Web API routes
+            // Attribute Routing Enabled
             config.MapHttpAttributeRoutes();
 
+            // Convention-Based Routing Enabled
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

@@ -6,7 +6,7 @@ namespace Entities
     /// <summary>
     /// Entidad que representa un vehiculo a alquilar.
     /// </summary>
-    public class Car
+    public class Car : IEquatable<Car>
     {
         /// <summary>
         /// ID de Auto
@@ -48,5 +48,19 @@ namespace Entities
         /// </summary>
         [Display(Name = "Automatico")]
         public Boolean AutomaticDrive { get; set; }
+
+        #region IEquatable Methods
+
+        /// <summary>
+        /// A Car is equal to another if the Domain matches
+        /// </summary>
+        /// <param name="other">Car to Compare</param>
+        /// <returns>Equal/Inequal</returns>
+        public bool Equals(Car other)
+        {
+            return (this.Domain == other.Domain);
+        }
+
+        #endregion
     }
 }
