@@ -28,9 +28,16 @@ namespace ServicesWebApi.Controllers
         // GET: api/Cars
         [HttpGet]
         [Route("")]
-        public IEnumerable<Car> GetAll()
+        public IHttpActionResult GetAll()
         {
-            return this.carRepository.GetAll();
+            List<Car> cars;
+
+            cars = this.carRepository.GetAll().ToList();
+
+            if (cars == null)
+                return NotFound();
+
+            return Ok(cars);
         }
 
         // GET: api/Cars/5

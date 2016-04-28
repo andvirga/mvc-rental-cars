@@ -27,9 +27,16 @@ namespace ServicesWebApi.Controllers
         // GET: api/Reservations
         [HttpGet]
         [Route("")]
-        public IEnumerable<Reservation> GetAll()
+        public IHttpActionResult GetAll()
         {
-            return this.reservationRepo.GetAll();
+            List<Reservation> reservations;
+
+            reservations = this.reservationRepo.GetAll().ToList();
+
+            if (reservations == null)
+                return NotFound();
+
+            return Ok(reservations);
         }
 
 
